@@ -12,6 +12,8 @@ target 'nativejc18' do
     :hermes_enabled => false
   )
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'nativejc18Tests' do
     inherit! :complete
     # Pods for testing
