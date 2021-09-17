@@ -34,7 +34,7 @@ import {
 } from 'react-native';
 import {Icon, Card} from 'react-native-elements';
 import MenuGeser from './src/components/MenuGeser';
-
+import LinearGradient from 'react-native-linear-gradient';
 import Data from './src/assets/data.json';
 import {Avatar, NativeBaseProvider} from 'native-base';
 
@@ -58,20 +58,32 @@ const Stories = ({darkmode}) => {
   }
   return (
     <View style={AvatarContainer}>
-      <Avatar
-        style={storyBorder}
-        size="lg"
-        source={{
-          uri: 'https://pbs.twimg.com/profile_images/1352844693151731713/HKO7cnlW_400x400.jpg',
+      <LinearGradient
+        colors={['#833ab4', '#fd1d1d', '#fc6d33', '#d62976']}
+        locations={[0, 0.31, 0.67, 0.92]}
+        style={{
+          padding: 3.5,
+          borderRadius: 50,
+          justifyContent: 'center',
+          alignItems: 'center',
         }}>
-        1
-      </Avatar>
-      <Text style={{color: warnaText}}>Your Story</Text>
+        <Avatar
+          // style={storyBorder}
+          size="lg"
+          source={{
+            uri: 'https://pbs.twimg.com/profile_images/1352844693151731713/HKO7cnlW_400x400.jpg',
+          }}>
+          1
+        </Avatar>
+      </LinearGradient>
+      <Text style={[{color: warnaText}, {fontSize: 12, fontWeight: '400'}]}>
+        Your Story
+      </Text>
     </View>
   );
 };
 
-const Header = ({darkmode}) => {
+const Header = ({darkmode, setDarkMode}) => {
   // console.log(Appearance.getColorScheme());
   const warnaText = darkmode ? 'white' : 'black';
   return (
@@ -85,7 +97,7 @@ const Header = ({darkmode}) => {
       <Image
         style={{
           width: '30%',
-          height: windowHeight * (9 / 100),
+          height: windowHeight * (8 / 100),
           tintColor: warnaText,
         }}
         resizeMode="contain"
@@ -105,13 +117,15 @@ const Header = ({darkmode}) => {
         <Text>
           <Icon name="heart-o" type="font-awesome" color={warnaText} />
         </Text>
-        <Text>
-          <Icon
-            name="facebook-messenger"
-            type="material-community"
-            color={warnaText}
-          />
-        </Text>
+        <TouchableWithoutFeedback onPress={() => setDarkMode(!darkmode)}>
+          <Text>
+            <Icon
+              name="facebook-messenger"
+              type="material-community"
+              color={warnaText}
+            />
+          </Text>
+        </TouchableWithoutFeedback>
       </View>
     </View>
   );
@@ -172,12 +186,14 @@ const AvatarGroup = () => {
   );
 };
 
-const Feed = () => {
+const Feed = ({isDarkmode}) => {
+  const warnaText = isDarkmode ? 'white' : 'black';
+
   return (
     <View
       style={{
         marginHorizontal: 0,
-        marginVertical: 10,
+        marginVertical: 5,
         paddingHorizontal: 0,
         paddingBottom: 0,
         // backgroundColor: 'black',
@@ -194,9 +210,9 @@ const Feed = () => {
             uri: 'https://images.pexels.com/photos/2131830/pexels-photo-2131830.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
           }}
         />
-        <Text style={{marginLeft: 5}}>User1</Text>
+        <Text style={{marginLeft: 5, color: warnaText}}>User1</Text>
         <View style={{marginLeft: 'auto'}}>
-          <Icon type="feather" name="more-horizontal" />
+          <Icon type="feather" name="more-horizontal" color={warnaText} />
         </View>
       </View>
       <View style={{marginVertical: 10, height: windowHeight * 0.4}}>
@@ -212,22 +228,22 @@ const Feed = () => {
           style={{marginHorizontal: 7}}
           name="heart-o"
           type="font-awesome"
-          color={'black'}
+          color={warnaText}
         />
         <Icon
           style={{marginHorizontal: 7}}
           name="comment-o"
           type="font-awesome"
-          color={'black'}
+          color={warnaText}
         />
         <Icon
           style={{marginHorizontal: 7}}
           name="paper-plane-o"
           type="font-awesome"
-          color={'black'}
+          color={warnaText}
         />
         <View style={{marginLeft: 'auto', marginRight: 10}}>
-          <Icon name="bookmark-o" type="font-awesome" color={'black'} />
+          <Icon name="bookmark-o" type="font-awesome" color={warnaText} />
         </View>
       </View>
       <View
@@ -240,14 +256,14 @@ const Feed = () => {
         <View>
           <AvatarGroup />
         </View>
-        <View>
-          <Text>Liked by kenzons and 5 others</Text>
+        <View style={{marginLeft: 5}}>
+          <Text style={{color: warnaText}}>Liked by kenzons and 5 others</Text>
         </View>
       </View>
       <View style={{paddingHorizontal: 5, marginTop: 5}}>
         <Text>
-          <Text style={{fontWeight: 'bold'}}>User1</Text>{' '}
-          <Text>Caption blablabla</Text>
+          <Text style={{fontWeight: 'bold', color: warnaText}}>User1</Text>{' '}
+          <Text style={{color: warnaText}}>Caption blablabla</Text>
         </Text>
       </View>
       <View style={{paddingHorizontal: 5, marginTop: 5}}>
@@ -257,12 +273,12 @@ const Feed = () => {
   );
 };
 
-const Atas = ({isDarkmode}) => {
+const Atas = ({isDarkmode, setDarkMode}) => {
   const {mainContainer, storyBorder, storyContainer, AvatarContainer} = styles;
 
   return (
     <>
-      <Header darkmode={isDarkmode} />
+      <Header darkmode={isDarkmode} setDarkMode={setDarkMode} />
       <ScrollView
         showsHorizontalScrollIndicator={false}
         horizontal
@@ -283,7 +299,10 @@ const Atas = ({isDarkmode}) => {
 const App = () => {
   const {mainContainer, storyBorder, storyContainer, AvatarContainer} = styles;
   const [isDarkmode, setDarkMode] = useState(false);
+  const [refresh, setrefresh] = useState(false);
   const backgroundColors = isDarkmode ? '#111111' : 'white';
+  const warnaText = isDarkmode ? 'white' : 'black';
+
   return (
     <NativeBaseProvider>
       <StatusBar
@@ -293,9 +312,20 @@ const App = () => {
       <View style={[mainContainer, {backgroundColor: backgroundColors}]}>
         <SafeAreaView style={{flex: 1}}>
           <FlatList
-            ListHeaderComponent={<Atas isDarkmode={isDarkmode} />}
+            ListHeaderComponent={
+              <Atas isDarkmode={isDarkmode} setDarkMode={setDarkMode} />
+            }
             data={[1, 2, 3, 4]}
-            renderItem={() => <Feed />}
+            renderItem={() => <Feed isDarkmode={isDarkmode} />}
+            keyExtractor={item => item}
+            refreshControl={
+              <RefreshControl
+                colors={[warnaText]}
+                refreshing={refresh}
+                progressBackgroundColor={backgroundColors}
+                onRefresh={() => console.log('tes')} //axios get data lagi sepeti di didmount
+              />
+            }
           />
           <View>
             <Text>Navigator</Text>
@@ -324,7 +354,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   storyBorder: {
-    borderColor: 'orange',
+    borderColor: 'transparent',
     borderWidth: 1.5,
   },
 });
