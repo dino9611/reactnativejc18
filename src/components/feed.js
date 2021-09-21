@@ -84,7 +84,7 @@ const Feed = ({isDarkmode, data, navigation}) => {
           marginTop: 10,
         }}>
         <View>
-          <AvatarGroup />
+          <AvatarGroup key={data.name} />
         </View>
         <View style={{marginLeft: 5}}>
           <Text style={{color: warnaText}}>Liked by kenzons and 5 others</Text>

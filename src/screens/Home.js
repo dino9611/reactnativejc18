@@ -58,9 +58,9 @@ const Home = ({navigation}) => {
               />
             }
           />
-          <View>
+          {/* <View>
             <Text>Navigator</Text>
-          </View>
+          </View> */}
         </SafeAreaView>
       </View>
     </>
