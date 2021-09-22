@@ -10,6 +10,9 @@ import RootStack from './src/navigations/RootStack';
 import LogInScreen from './src/screens/Login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
+import axios from 'axios';
+import {API_URL} from './src/helpers';
+import Register from './src/screens/Register';
 
 const Stack = createStackNavigator();
 
@@ -32,8 +35,9 @@ const Stack = createStackNavigator();
 
 const StackAuth = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Login" component={LogInScreen} />
+      <Stack.Screen name="Register" component={Register} />
     </Stack.Navigator>
   );
 };
@@ -66,22 +70,21 @@ const App = () => {
     //   });
     // cara async await
     try {
-      const res = await AsyncStorage.getItem('token');
-      console.log(res);
-      setloading(false);
-      if (res) {
-        dispatch({type: 'LOGIN'});
+      const token = await AsyncStorage.getItem('token');
+      console.log(token);
+      // setloading(false);
+      if (token) {
+        const res = await axios.get(`${API_URL}/users/${token}`);
+        dispatch({type: 'LOGIN', payload: res.data});
       }
       // if (res === 'dinos') {
       //   throw 'salah tokennya bro'; // string ini akan masuk ke variable error di catch
       // }
     } catch (error) {
       console.log('error message', error);
+    } finally {
+      setloading(false);
     }
-
-    // setTimeout(() => {
-    //   setloading(false);
-    // }, 2000);
   }, []);
 
   const {Auth} = useSelector(state => {
