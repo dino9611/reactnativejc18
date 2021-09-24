@@ -80,12 +80,12 @@ const Feed = ({isDarkmode, data, navigation}) => {
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          paddingLeft: 5,
+          // paddingLeft: 5,
           marginTop: 10,
         }}>
-        <View>
+        {/* <View>
           <AvatarGroup key={data.name} />
-        </View>
+        </View> */}
         <View style={{marginLeft: 5}}>
           <Text style={{color: warnaText}}>Liked by kenzons and 5 others</Text>
         </View>

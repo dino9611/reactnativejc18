@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {axiosInstance} from '../helpers/axiosInstance';
 import React, {useEffect, useState} from 'react';
 import {
   View,
@@ -17,8 +18,12 @@ function ProductScreen({navigation, route}) {
   const [limit, setlimit] = useState(7);
 
   const fetchData = async () => {
-    const {data} = await axios.get(`${API_URL}/products?_limit=${limit}`);
-    setproducts(data);
+    try {
+      const {data} = await axiosInstance.get(`/products?_limit=${limit}`);
+      setproducts(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const RefreshHandler = async () => {

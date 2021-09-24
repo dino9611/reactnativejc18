@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Button} from 'react-native';
-
+import {connect} from 'react-redux';
 function CartScreen({navigation, route}) {
   const [angka, setangka] = useState(1);
 
@@ -20,4 +20,10 @@ function CartScreen({navigation, route}) {
   );
 }
 
-export default CartScreen;
+const mapStateToProps = state => {
+  return {
+    Auth: state.Auth,
+  };
+};
+
+export default connect(mapStateToProps)(CartScreen);

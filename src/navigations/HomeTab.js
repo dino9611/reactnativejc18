@@ -1,21 +1,26 @@
 import React from 'react';
-
+import {View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 // screen
 import Home from './../screens/Home';
 import ProductScreen from './../screens/Product';
 import CartScreen from './../screens/Cart';
 import ProfileScreen from './../screens/ProfIle';
-
-import {Icon} from 'react-native-elements';
+import {connect} from 'react-redux';
+import {Icon, Badge} from 'react-native-elements';
 
 const TabNav = createBottomTabNavigator();
 
-const HomeTab = () => {
+const HomeTab = ({Auth}) => {
   return (
     <TabNav.Navigator
       screenOptions={({route}) => {
         return {
+          tabBarInactiveTintColor: 'lightgray',
+          tabBarActiveTintColor: 'black',
+          tabBarStyle: {
+            backgroundColor: 'white',
+          },
           tabBarIcon: ({focused, color, size}) => {
             let iconName;
             // size = focused ? 30 : size;
@@ -25,6 +30,23 @@ const HomeTab = () => {
               iconName = focused ? 'message' : 'message';
             } else if (route.name === 'Cart') {
               iconName = focused ? 'add-shopping-cart' : 'add-shopping-cart';
+              if (Auth.carts.length) {
+                return (
+                  <View>
+                    <Badge
+                      value={Auth.carts.length}
+                      containerStyle={{
+                        position: 'absolute',
+                        top: -5,
+                        right: -4,
+                        elevation: 2,
+                      }}
+                      status="error"
+                    />
+                    <Icon name={iconName} color={color} size={30} />
+                  </View>
+                );
+              }
             } else {
               iconName = focused ? 'account-circle' : 'account-circle';
             }
@@ -35,13 +57,6 @@ const HomeTab = () => {
             return null; // label pada icon tidak ada
           },
         };
-      }}
-      tabBarOptions={{
-        inactiveTintColor: 'lightgray',
-        activeTintColor: 'black',
-        tabStyle: {
-          backgroundColor: 'white',
-        },
       }}>
       <TabNav.Screen name="Home" component={Home} />
       <TabNav.Screen name="Products" component={ProductScreen} />
@@ -51,4 +66,10 @@ const HomeTab = () => {
   );
 };
 
-export default HomeTab;
+const mapStateToProps = state => {
+  return {
+    Auth: state.Auth,
+  };
+};
+
+export default connect(mapStateToProps)(HomeTab);
