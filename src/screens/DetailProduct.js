@@ -19,6 +19,11 @@ class DetailProduct extends Component {
     qty: 1,
   };
 
+  format = amount => {
+    return Number(amount)
+      .toFixed(2)
+      .replace(/\d(?=(\d{3})+\.)/g, '$&,');
+  };
   onAddTocartClick = () => {
     const {route} = this.props;
     let userId = this.props.Auth.id;
@@ -32,6 +37,14 @@ class DetailProduct extends Component {
       qty: parseInt(this.state.qty),
     };
     this.props.AddToCartAction(AddCart, userId);
+  };
+
+  substractQty = () => {
+    const {qty} = this.state;
+    let akhirkurang = qty - 1;
+    if (akhirkurang >= 1) {
+      this.setState({qty: akhirkurang});
+    }
   };
 
   render() {
@@ -74,7 +87,7 @@ class DetailProduct extends Component {
                   backgroundColor: 'white',
                   padding: 5,
                 }}>
-                <Icon name="home" />
+                <Icon name="heart-o" color="red" type="font-awesome" />
               </View>
             </View>
           </ImageBackground>
@@ -95,7 +108,7 @@ class DetailProduct extends Component {
                 fontWeight: '500',
                 textTransform: 'capitalize',
               }}>
-              Rp.{price}
+              Rp.{this.format(price)}
             </Text>
             <View style={{flexDirection: 'row'}}>
               <View
@@ -114,8 +127,7 @@ class DetailProduct extends Component {
                   justifyContent: 'flex-end',
                   // marginRight: 10,
                 }}>
-                <TouchableWithoutFeedback
-                  onPress={() => this.setState({qty: qty - 1})}>
+                <TouchableWithoutFeedback onPress={this.substractQty}>
                   <View
                     style={{
                       padding: 2,
@@ -173,12 +185,20 @@ class DetailProduct extends Component {
             height: 50,
             flexDirection: 'row',
           }}>
-          <View>
-            <Text>{price * this.state.qty}</Text>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '40%',
+            }}>
+            <Text style={{fontWeight: '500'}}>
+              {' '}
+              Rp.{this.format(price * this.state.qty)}
+            </Text>
           </View>
           <Button
             onPress={this.onAddTocartClick}
-            icon={<Icon name="home" size={25} color="white" />}
+            icon={<Icon name="add-shopping-cart" size={25} color="white" />}
             title="add to cart"
             containerStyle={{width: '50%'}}
             buttonStyle={{height: '100%'}}

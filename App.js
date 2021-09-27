@@ -101,6 +101,8 @@ const App = () => {
     <NativeBaseProvider>
       <NavigationContainer>
         {Auth.isLogin ? <RootStack /> : <StackAuth />}
+        {/* <StackAuth /> */}
+        {/* <RootStack /> */}
       </NavigationContainer>
     </NativeBaseProvider>
   );
