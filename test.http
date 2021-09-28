@@ -3,13 +3,13 @@ Content-Type: application/json
 Authorization: key=AAAAnW1GzJI:APA91bGmGxadMzI_3E-M3tdtEjg6mFZTr-FDiIjkmr14ZdrDSoFbP5Td68Hbphs15ZMLdBHqVaGaMFNc3qIfEHlcU95i61BjqmMmugORKPjUtUuubNKUond0rrF2nOoKTxMXoIasoqj6
 
 {   
-   "to":"/topics/all",
+    "to":"/topics/all",
     "notification": {
       "title": "Check this Mobile (title)",
       "body": "Rich Notification testing (body)",
     },
    "data": {
-    "dl": "test/s",
-    "coba":{"screen":"home"}
+      "dl": "test/s",
+      "coba":{"screen":"home"}
     }
 }

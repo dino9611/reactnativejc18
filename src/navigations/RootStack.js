@@ -5,6 +5,7 @@ import DrawerNav from './DrawNav';
 import DetailsScreen from './../screens/Details';
 import DetailFeed from './../screens/DetailFeed';
 import DetailProduct from '../screens/DetailProduct';
+import Checkout from '../screens/checkout';
 const NativeStack = createNativeStackNavigator();
 
 const RootStack = () => {
@@ -21,6 +22,7 @@ const RootStack = () => {
         options={{headerShown: false}}
         component={DetailProduct}
       />
+      <NativeStack.Screen name="Checkout" component={Checkout} />
       <NativeStack.Screen
         name="DetailFeed"
         component={DetailFeed}

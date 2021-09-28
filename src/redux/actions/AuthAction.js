@@ -43,3 +43,19 @@ export const AddToCartAction = (data, userId) => {
     // add cart
   };
 };
+
+export const UpdateCartAction = (newCart, userId) => {
+  // datacart = array
+  // index = number
+
+  return async dispatch => {
+    try {
+      await axiosInstance.patch(`/users/${userId}`, {carts: newCart});
+      // refresh userdata
+      const res1 = await axiosInstance.get(`/users/${userId}`);
+      dispatch({type: 'CART', carts: res1.data.carts});
+    } catch (error) {
+      console.log(error, 'action');
+    }
+  };
+};
