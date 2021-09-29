@@ -1,60 +1,16 @@
 import React from 'react';
-import {View, Text} from 'react-native';
 import {NativeBaseProvider} from 'native-base';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 import {useSelector} from 'react-redux';
 import {useState} from 'react';
 import {useEffect} from 'react';
 import RootStack from './src/navigations/RootStack';
-import LogInScreen from './src/screens/Login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import axios from 'axios';
 import {API_URL} from './src/helpers';
-import Register from './src/screens/Register';
-
-const Stack = createStackNavigator();
-
-//? structure Navigator
-{
-  /*
-  StackNav
-      -drawerNav
-          -hometab
-              -Home
-              -Product
-              -cart
-              -profile
-          -logout
-      -detail
-      -detailfeed
-  StackNav 
-  */
-}
-
-const StackAuth = () => {
-  return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Login" component={LogInScreen} />
-      <Stack.Screen name="Register" component={Register} />
-    </Stack.Navigator>
-  );
-};
-
-const SplashScreen = () => {
-  return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'white',
-      }}>
-      <Text>ini SplashScreen</Text>
-    </View>
-  );
-};
+import SplashScreen from './src/screens/Splash';
+import StackAuth from './src/navigations/StackAuth';
 
 const App = () => {
   const [loading, setloading] = useState(true);

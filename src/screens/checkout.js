@@ -6,7 +6,7 @@ import {Button as ButtonEl, Icon, Divider} from 'react-native-elements';
 import {TextInput} from 'react-native';
 import {axiosInstance} from '../helpers/axiosInstance';
 import {UpdateCartAction} from '../redux/actions/AuthAction';
-
+import * as Animatable from 'react-native-animatable';
 const Checkout = ({navigation}) => {
   const [banks] = useState([
     {name: 'BCA', norek: '11000'},
@@ -111,11 +111,29 @@ const Checkout = ({navigation}) => {
     //   });
   };
 
+  const zoomOut = {
+    0: {
+      opacity: 0,
+      scaleY: 0,
+    },
+    0.5: {
+      opacity: 1,
+      scaleY: 0.4,
+    },
+    1: {
+      opacity: 1,
+      scaleY: 1,
+    },
+  };
+
   const renderBank = () => {
     if (indexPilBank >= 0) {
       let val = banks[indexPilBank];
       return (
-        <View style={{flexDirection: 'row'}}>
+        <Animatable.View
+          useNativeDriver={true}
+          animation={zoomOut}
+          style={{flexDirection: 'row'}}>
           <ButtonEl
             key={val.name}
             title={val.name + ' : ' + val.norek}
@@ -133,12 +151,12 @@ const Checkout = ({navigation}) => {
             containerStyle={{width: '20%', marginRight: 'auto'}}
             onPress={() => setindexpilbank(-1)}
           />
-        </View>
+        </Animatable.View>
       );
     }
     return banks.map((val, index) => {
       return (
-        <View>
+        <Animatable.View useNativeDriver={true} animation={zoomOut}>
           <ButtonEl
             key={index}
             title={val.name + ' : ' + val.norek}
@@ -149,7 +167,7 @@ const Checkout = ({navigation}) => {
             }}
             onPress={() => setindexpilbank(index)}
           />
-        </View>
+        </Animatable.View>
       );
     });
   };

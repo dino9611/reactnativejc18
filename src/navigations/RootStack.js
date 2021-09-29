@@ -5,7 +5,7 @@ import DrawerNav from './DrawNav';
 import DetailsScreen from './../screens/Details';
 import DetailFeed from './../screens/DetailFeed';
 import DetailProduct from '../screens/DetailProduct';
-import Checkout from '../screens/checkout';
+import Checkout from '../screens/Checkout';
 const NativeStack = createNativeStackNavigator();
 
 const RootStack = () => {

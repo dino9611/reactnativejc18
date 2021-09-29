@@ -2,6 +2,7 @@ import React from 'react';
 
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import LogOutScreen from './../screens/Logout';
+import History from './../screens/History';
 import HomeTab from './HomeTab';
 const Drawer = createDrawerNavigator();
 
@@ -18,6 +19,7 @@ const DrawerNav = () => {
         // drawerItemStyle:,
       })}>
       <Drawer.Screen name="HomeTab" component={HomeTab} />
+      <Drawer.Screen name="History" component={History} />
       <Drawer.Screen name="LogOut" component={LogOutScreen} />
     </Drawer.Navigator>
   );
